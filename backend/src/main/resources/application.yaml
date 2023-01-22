@@ -40,3 +40,5 @@ spring:
   redis:
     host: localhost
     port: 6379
+OPENVIDU_URL: https://happyhouse.cf
+OPENVIDU_SECRET : COLORTHEROCK
