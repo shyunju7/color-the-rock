@@ -1,7 +1,9 @@
 package org.anotherclass.colortherock.domain.video.entity;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.anotherclass.colortherock.domain.member.entity.Member;
 import org.anotherclass.colortherock.domain.videoboard.entity.VideoBoard;
 
@@ -9,7 +11,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "video") @Getter @Setter
+@Table(name = "video")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Video {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +22,17 @@ public class Video {
 
     @Column(name = "shooting_date")
     private LocalDate shootingDate;
+
+    @Builder
+    public Video(Integer level, String gymName, String s3URL, Boolean isSuccess, String thumbnailURL, String color, Member member) {
+        this.level = level;
+        this.gymName = gymName;
+        this.s3URL = s3URL;
+        this.isSuccess = isSuccess;
+        this.thumbnailURL = thumbnailURL;
+        this.color = color;
+        this.member = member;
+    }
 
     @Column(name = "level")
     private Integer level;
@@ -39,9 +54,10 @@ public class Video {
     @Column(name = "video_name", length = 100)
     private String videoName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
 
     @OneToOne(mappedBy = "video", orphanRemoval = true)
     private VideoBoard videoBoard;
