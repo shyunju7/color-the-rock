@@ -17,6 +17,7 @@ public enum GlobalErrorCode {
     ACCESS_DENIED(401, "G400", "허용되지 않은 사용자입니다"),
     // 멤버와 관련된 Exception
     DUPLICATE_NICKNAME(400, "M100", "중복 닉네임 입니다"),
+    SESSION_NOT_FOUND(400, "L100", "세션을 찾을 수 없습니다."),
     // 기록과 관련된 Exception
     MALFORMED_DATE(400, "R100", "잘못된 날짜 형식입니다."),
     // 영상과 관련된 Exception
