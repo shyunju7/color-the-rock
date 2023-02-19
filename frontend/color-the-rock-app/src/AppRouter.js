@@ -24,6 +24,7 @@ import UploadS3Form from "./pages/Board/UploadS3Form";
 import ErrorPage from "./pages/Error";
 import { useSelector } from "react-redux";
 import Admin from "./pages/Admin";
+import RouteChangeTracker from "./lib/RouteChangeTracker";
 
 const Layout = () => {
   return (
@@ -39,6 +40,7 @@ const AppRouter = () => {
   if (!isLogin) {
     return (
       <Router>
+        RouteChangeTracker();
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Intro />} />
