@@ -270,11 +270,13 @@ const StreamingLive = () => {
   const onSessionCreated = () => {
     session.on(`signal:signal`, (event) => {
       const msg = JSON.parse(event.data).message;
-      const userName = JSON.parse(event.from.data).clientData;
+      let userName = JSON.parse(event.from.data).clientData;
 
-      console.log("userName:", nickName, "", event);
+      if (publisher !== undefined) {
+        userName += "👑";
+      }
 
-      // test
+      // send Message
       setMessages((prev) =>
         prev.concat({
           userName: userName,

@@ -93,15 +93,16 @@ export const ChattingContent = styled.div`
   flex-direction: column;
   width: 100%;
   min-height: 1.25rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.2rem;
 `;
 
 export const ChattingUserNickname = styled.label`
   font-style: normal;
-  font-weight: bold;
+  font-weight: 400;
   font-size: 0.813rem;
   line-height: 1.25rem;
   letter-spacing: -0.01em;
+  color: var(--color-tertiary);
 `;
 
 export const ChattingText = styled.label`
