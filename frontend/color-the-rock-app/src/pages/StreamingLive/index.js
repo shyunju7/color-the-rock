@@ -134,42 +134,44 @@ const StreamingLive = () => {
   }, [session]);
   useEffect(() => {
     if (token !== "" && session !== undefined) {
-      session.connect(token, { clientData: nickName + "👑" }).then(async () => {
-        let publisher = await ov.initPublisherAsync(undefined, {
-          audioSource: undefined, // The source of audio. If undefined default microphone
-          videoSource: undefined, // The source of video. If undefined default webcam
-          publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-          publishVideo: true, // Whether you want to start publishing with your video enabled or not
-          resolution: "640x480", // The resolution of your video
-          frameRate: 30, // The frame rate of your video
-          insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-          mirror: false, // Whether to mirror your local video or not
+      session
+        .connect(token, { clientData: nickName + " 👑" })
+        .then(async () => {
+          let publisher = await ov.initPublisherAsync(undefined, {
+            audioSource: undefined, // The source of audio. If undefined default microphone
+            videoSource: undefined, // The source of video. If undefined default webcam
+            publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+            publishVideo: true, // Whether you want to start publishing with your video enabled or not
+            resolution: "640x480", // The resolution of your video
+            frameRate: 30, // The frame rate of your video
+            insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+            mirror: false, // Whether to mirror your local video or not
+          });
+
+          session.publish(publisher); // publisher는 본인의 화면을 송출
+
+          setSessionId(session.sessionId);
+          setConnectionId(session.connection.connectionId);
+
+          // Obtain the current video device in use
+          let devices = await ov.getDevices();
+          let videoDevices = devices.filter(
+            (device) => device.kind === "videoinput"
+          );
+
+          let currentVideoDeviceId = publisher.stream
+            .getMediaStream()
+            .getVideoTracks()[0]
+            .getSettings().deviceId;
+          let CurrentVideoDevice = videoDevices.find(
+            (device) => device.deviceId === currentVideoDeviceId
+          );
+
+          setSubscribers((prev) => [publisher, ...prev]);
+          setCurrentVideoDevice(CurrentVideoDevice);
+          setMainStreamManager(publisher);
+          setPublisher(publisher);
         });
-
-        session.publish(publisher); // publisher는 본인의 화면을 송출
-
-        setSessionId(session.sessionId);
-        setConnectionId(session.connection.connectionId);
-
-        // Obtain the current video device in use
-        let devices = await ov.getDevices();
-        let videoDevices = devices.filter(
-          (device) => device.kind === "videoinput"
-        );
-
-        let currentVideoDeviceId = publisher.stream
-          .getMediaStream()
-          .getVideoTracks()[0]
-          .getSettings().deviceId;
-        let CurrentVideoDevice = videoDevices.find(
-          (device) => device.deviceId === currentVideoDeviceId
-        );
-
-        setSubscribers((prev) => [publisher, ...prev]);
-        setCurrentVideoDevice(CurrentVideoDevice);
-        setMainStreamManager(publisher);
-        setPublisher(publisher);
-      });
     }
   }, [token]);
 
