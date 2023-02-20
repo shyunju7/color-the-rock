@@ -134,7 +134,7 @@ const StreamingLive = () => {
   }, [session]);
   useEffect(() => {
     if (token !== "" && session !== undefined) {
-      session.connect(token, { clientData: nickName }).then(async () => {
+      session.connect(token, { clientData: nickName + "👑" }).then(async () => {
         let publisher = await ov.initPublisherAsync(undefined, {
           audioSource: undefined, // The source of audio. If undefined default microphone
           videoSource: undefined, // The source of video. If undefined default webcam
@@ -271,10 +271,6 @@ const StreamingLive = () => {
     session.on(`signal:signal`, (event) => {
       const msg = JSON.parse(event.data).message;
       let userName = JSON.parse(event.from.data).clientData;
-
-      if (publisher !== undefined) {
-        userName += "👑";
-      }
 
       // send Message
       setMessages((prev) =>
