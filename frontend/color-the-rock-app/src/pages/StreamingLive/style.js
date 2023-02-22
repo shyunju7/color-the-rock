@@ -117,7 +117,7 @@ export const CommentModalWrap = styled(motion.div)`
     bottom: 0px;
     width: 100%;
     padding-top: 2rem;
-    z-index: 100;
+    z-index: 100000;
   }
 `;
 
