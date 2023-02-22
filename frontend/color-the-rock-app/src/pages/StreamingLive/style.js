@@ -79,6 +79,7 @@ export const SettingWrapper = styled.div`
   padding: 1rem;
   display: flex;
   justify-content: space-around;
+  z-index: 1000;
   background-color: var(--color-background);
 `;
 

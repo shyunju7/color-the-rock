@@ -18,6 +18,7 @@ export const Container = styled(motion.div)`
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     filter: drop-shadow(0px -4px 2px rgba(0, 0, 0, 0.25));
+    z-index: 100000;
   }
 `;
 
